@@ -31,8 +31,8 @@ function Home() {
   , [productos])
   
 
-  const handleClick = (category:string ,name:string) => {
-    navigate(`/item/${category}/${name}`);
+  const handleClick = (category:string ,id:number) => {
+    navigate(`/item/${category}/${id}`);
   }
   return (
       <div className='container mx-auto flex flex-col gap-2'>
@@ -44,8 +44,8 @@ function Home() {
             loading 
             ? <Loader/>
             : productos.map(
-              (producto: Productos) =>
-              <CardItem handleClick={() => handleClick(producto.category, producto.name)} title={producto.name} image={producto.image} />
+              (producto: Productos, index: number) =>
+              <CardItem key={'a'+ index} handleClick={() => handleClick(producto.category, producto.id)} title={producto.name} image={producto.image} />
               )
           }
         </div>

@@ -7,6 +7,16 @@ interface AppContextInterface {
     cantidad: number | null,
     addProducto: (producto: any) => void | null,
 }
+interface productoCarrito{
+    id: number,
+    name: string,
+    price: number,
+    description: string,
+    image: string,
+    category: string,
+    quantity: number,
+    size: string
+}
 
 export const carritoContext = createContext<AppContextInterface>(null as any)
 
@@ -44,9 +54,22 @@ export function CarritoContext({children}: any | undefined) {
         addProducto: addProducto,
     }
 
-    function addProducto (producto: any) {
-        setCarrito([...carrito, producto])
-        setCantidad(cantidad + 1)
+    function addProducto (producto: productoCarrito) {
+
+        carrito.forEach(element =>{
+            console.log(element, producto);
+            
+            
+        if( element.id == producto.id) {
+            if (element.size == producto.size){
+                element.quantity = element.quantity + producto.quantity
+                element.size = producto.size
+            }
+        }
+            setCarrito([...carrito, producto])
+            setCantidad(carrito.length)
+        
+        })
     }
     return (
     <Provider value={contextValue}>

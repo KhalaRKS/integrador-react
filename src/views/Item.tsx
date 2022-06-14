@@ -25,11 +25,29 @@ interface Producto {
 export function Item() {
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
-  const {category, name} = useParams()
-  const {addProducto} = useContext(carritoContext)
-  console.log(category, name);
+  const [size, setSize] = useState('s')
+  const {category,id} = useParams()
+  const {addProducto, carrito} = useContext(carritoContext)
+  const {productos} = useContext(productsContext);
+  const [item, setItem] = useState({
+    id:null,
+    name: null,
+    image: null,
+    price: null,
+    description: null,
+    quantity: null,
+    category: null,
+  })
+  console.log(category,typeof id);
   
   useEffect(() => {
+    productos.forEach((element: Producto) => {
+      let prodId = parseInt(id)
+      if(element.id == prodId){
+        console.log("existe");
+        setItem(element)
+      }
+    });
     setLoading(false)
   }
   , [])
@@ -46,25 +64,41 @@ export function Item() {
   const getQuantity = (quan: number) => {
     setQuantity(quan)
   }
+  const getSize = (tamano: string) =>{
+    setSize(tamano)
+    console.log(size);
+    
+  }
+  const enviarAlCarrito = (producto: Producto) =>{
+    let objetoConDetalles = {
+      ...producto,
+      quantity,
+      size
+    }
+    addProducto(objetoConDetalles)
+  }
+
   console.log("CANTIDAD EN ITEM, CONTEXT" + quantity);
+  console.log(carrito);
   
+
   return(
     <>
       
     {loading 
       ? <Loader/>
       : <div className="lg:container w-full md:h-180 lg:h-fit md:container p-1 md:p-0 mx-auto my-5">
-          <h2 className="text-sm uppercase font-extralight font">{category} {'>'} {category} {'>'} # {name} </h2>
+          <h2 className="text-sm uppercase font-extralight font">{category} {'>'} {category} {'>'} # {id} </h2>
           <div className="flex flex-wrap flex-col sm:flex-row sm:gap-2  md:max-h-120 my-2">
-              <PhotoDisplay photo={fotos.remera} />
+              <PhotoDisplay photo={item?.image} />
               <PhotoSelector />
               <div className="flex md:gap-2 flex-col basis-full md:basis-12/12 lg:basis-4/12">
-                <h2 className="text-lg font-semibold">{fotos.title}</h2>
-                <PriceItem price={15} />
+                <h2 className="text-lg font-semibold">{item.name}</h2>
+                <PriceItem price={item.price} />
                 <div className="flex flex-row gap-2">
-                  <SelectItemSize />
+                  <SelectItemSize getSize={getSize} />
                   <QuantityItem getQuantity={getQuantity}/>
-                  <button className="px-2 py-2 h-11 bg-neutral-900 hover:bg-neutral-700 active:bg-neutral-900 text-white font-bold">
+                  <button onClick={() => enviarAlCarrito(item)} className="px-2 py-2 h-11 bg-neutral-900 hover:bg-neutral-700 active:bg-neutral-900 text-white font-bold">
                     Agregar al carrito
                   </button>
                 </div>

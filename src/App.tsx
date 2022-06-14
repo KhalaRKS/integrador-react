@@ -17,7 +17,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/" element={<Home />}/>
               <Route path="/about" element={<About />}/>
-              <Route path='/item/:category/:name' element={<Item />}/>
+              <Route path='/item/:category/:id' element={<Item />}/>
           </Routes>
         </ProductsContext>
       </CarritoContext>
