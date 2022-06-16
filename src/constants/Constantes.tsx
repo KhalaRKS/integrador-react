@@ -1,0 +1,6 @@
+export const remerasMenPath = '../../assets/images/remeras/men/'
+export const remerasWomenPath = '../assets/images/remeras/women/'
+export const calzadoPath = '../assets/images/calzado/'
+export const accesoriosPath = '../assets/images/accesorios/'
+export const buzosPath = '../assets/images/buzos/'
+export const topsPath = '../assets/images/tops/'

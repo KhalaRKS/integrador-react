@@ -14,7 +14,7 @@ import { carritoContext } from '../context/CarritoContext';
 interface Producto {
   id: number,
   name: string,
-  image: string,
+  image: Array<string>,
   price: number,
   description: string,
   quantity: number,
@@ -29,6 +29,7 @@ export function Item() {
   const {category,id} = useParams()
   const {addProducto, carrito} = useContext(carritoContext)
   const {productos} = useContext(productsContext);
+  const [currentItemImage, setCurrentItemImage] = useState('')
   const [item, setItem] = useState({
     id:null,
     name: null,
@@ -43,9 +44,10 @@ export function Item() {
   useEffect(() => {
     productos.forEach((element: Producto) => {
       let prodId = parseInt(id)
-      if(element.id == prodId){
+      if(element.id === prodId){
         console.log("existe");
         setItem(element)
+        setCurrentItemImage(element.image[0])
       }
     });
     setLoading(false)
@@ -80,7 +82,11 @@ export function Item() {
 
   console.log("CANTIDAD EN ITEM, CONTEXT" + quantity);
   console.log(carrito);
-  
+  console.log(item.image);
+  const showSelectedImage = (image: string) => {
+    setCurrentItemImage(image)
+    console.log(image);
+  }
 
   return(
     <>
@@ -90,8 +96,8 @@ export function Item() {
       : <div className="lg:container w-full md:h-180 lg:h-fit md:container p-1 md:p-0 mx-auto my-5">
           <h2 className="text-sm uppercase font-extralight font">{category} {'>'} {category} {'>'} # {id} </h2>
           <div className="flex flex-wrap flex-col sm:flex-row sm:gap-2  md:max-h-120 my-2">
-              <PhotoDisplay photo={item?.image} />
-              <PhotoSelector />
+              <PhotoDisplay photo={currentItemImage} />
+              <PhotoSelector setPhoto={showSelectedImage} photo={item?.image} />
               <div className="flex md:gap-2 flex-col basis-full md:basis-12/12 lg:basis-4/12">
                 <h2 className="text-lg font-semibold">{item.name}</h2>
                 <PriceItem price={item.price} />

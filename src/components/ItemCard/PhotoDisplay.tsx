@@ -2,7 +2,7 @@ import React from 'react'
 
 
 interface PhotoDisplayProps {
-    photo: string
+    photo: string,
 }
 export function PhotoDisplay({ photo }: PhotoDisplayProps) {
   return (

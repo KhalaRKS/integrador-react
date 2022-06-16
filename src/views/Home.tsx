@@ -10,7 +10,7 @@ import { productsContext } from '../context/ProductsContext';
 interface Productos {
   id: number,
   name: string,
-  image: string,
+  image: Array<string>,
   price: number,
   description: string,
   quantity: number,
