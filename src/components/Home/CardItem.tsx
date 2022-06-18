@@ -7,8 +7,6 @@ interface CardItemProps {
 }
 
 export default function CardItem ({title, handleClick, image}: CardItemProps) {
-  console.log('image desde CardItem: '+  image);
-  console.log(title, image);
   const [imgPreview, setImgPreview] = useState(image[0])
   
   return (

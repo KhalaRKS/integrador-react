@@ -1,79 +1,84 @@
-
-import React, { createContext, useState } from 'react'
+import { createContext, useState, useEffect, useCallback } from "react"
+import toast from "react-hot-toast"
 
 interface AppContextInterface {
-    carrito: any[] | null,
-    total: number | null,
-    cantidad: number | null,
-    addProducto: (producto: any) => void | null,
+  carrito: any[] | null
+  total: number | null
+  cantidad: number | null
+  addProducto: (producto: any) => void | null
+  removeProducto: (producto: any) => void | null
+  cleanCarrito: () => void | null
 }
-interface productoCarrito{
-    id: number,
-    name: string,
-    price: number,
-    description: string,
-    image: string,
-    category: string,
-    quantity: number,
-    size: string
+interface productoCarrito {
+  id: number | null
+  name: string | null
+  price: number | null
+  description: string | null
+  image: string | null
+  category: string | null
+  quantity: number | null
+  size: string | null
 }
 
-export const carritoContext = createContext<AppContextInterface>(null as any)
+export const carritoContext = createContext<AppContextInterface>({} as AppContextInterface)
 
 const { Provider } = carritoContext
 
+export function CarritoContext({ children }: any | undefined) {
+  const [carrito, setCarrito] = useState<productoCarrito[]>([])
+  const [productQuantity, setProductQuantity] = useState(0)
+  const [cantidad, setCantidad] = useState(0)
+  const [total, setTotal] = useState(0)
 
-export function CarritoContext({children}: any | undefined) {
-    
-    const [carrito, setCarrito] = useState<any[]>([{
-        id: 1,
-        name: 'Producto 1',
-        price: 100,
-        description: 'Descripcion del producto 1',
-        image: 'https://picsum.photos/200/300',
-        category: 'remeras',
-        quantity: 1,
-    },
-    {   id: 2,
-        name: 'Producto 2',
-        price: 200,
-        description: 'Descripcion del producto 2',
-        image: 'https://picsum.photos/200/400',
-        category: 'remeras',
-        quantity: 1,
-    },
-])
-    const [cantidad, setCantidad] = useState(0)
-    const [total, setTotal] = useState(0)
-    
-    
-    const contextValue: AppContextInterface = {
-        carrito: carrito,
-        cantidad: cantidad,
-        total: total,
-        addProducto: addProducto,
+  const addProducto = (producto: productoCarrito) => {
+    let productoEnCarrito = carrito.find(
+      (item: productoCarrito) => item.id === producto.id && item.size === producto.size
+    )
+    if (productoEnCarrito) {
+      setProductQuantity(producto.quantity)
+      productoEnCarrito.quantity += producto.quantity
+    } else {
+      setCarrito([...carrito, producto])
     }
 
-    function addProducto (producto: productoCarrito) {
-
-        carrito.forEach(element =>{
-            console.log(element, producto);
-            
-            
-        if( element.id == producto.id) {
-            if (element.size == producto.size){
-                element.quantity = element.quantity + producto.quantity
-                element.size = producto.size
-            }
-        }
-            setCarrito([...carrito, producto])
-            setCantidad(carrito.length)
-        
-        })
+    setTotal(total + producto.price * producto.quantity)
+    toast.success('Agregado al carrito!')
+    
+  }
+  const removeProducto = (producto: productoCarrito) => {
+    let productoEnCarrito = carrito.findIndex(
+      (item: productoCarrito) => item.id === producto.id && item.size === producto.size
+    )
+    console.log(productoEnCarrito);
+    
+    if (productoEnCarrito >= 0) {
+      let newCarrito = carrito
+        newCarrito.splice(productoEnCarrito, 1)
+        setCarrito([...newCarrito])
+        setTotal(total - producto.price * producto.quantity)
+        toast.error("Producto eliminado del carrito")
+    }else{
+        cleanCarrito()
     }
-    return (
-    <Provider value={contextValue}>
-        {children}
-    </Provider>
-  )
+  }
+  const cleanCarrito = () => {
+    setCarrito([])
+    setTotal(0)
+    toast.success("Productos eliminados del carrito")
+  }
+
+  const contextValue: AppContextInterface = {
+    carrito: carrito,
+    cantidad: cantidad,
+    total: total,
+    addProducto: addProducto,
+    removeProducto: removeProducto,
+    cleanCarrito: cleanCarrito,
+  }
+
+  useEffect(() => {
+    setCantidad(carrito.length)
+  }, [carrito])
+
+  return <Provider value={contextValue}>{children}</Provider>
 }

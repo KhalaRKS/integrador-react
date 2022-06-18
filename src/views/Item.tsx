@@ -25,7 +25,7 @@ interface Producto {
 export function Item() {
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
-  const [size, setSize] = useState('s')
+  const [size, setSize] = useState('small')
   const {category,id} = useParams()
   const {addProducto, carrito} = useContext(carritoContext)
   const {productos} = useContext(productsContext);
@@ -39,36 +39,25 @@ export function Item() {
     quantity: null,
     category: null,
   })
-  console.log(category,typeof id);
   
   useEffect(() => {
     productos.forEach((element: Producto) => {
       let prodId = parseInt(id)
       if(element.id === prodId){
-        console.log("existe");
         setItem(element)
         setCurrentItemImage(element.image[0])
       }
     });
     setLoading(false)
-  }
-  , [])
-  
-  const fotos = {
-    title: "Gatito siames tierno, acostadito mirando a la pantalla.",
-    description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate blanditiis veritatis tenetur, nam possimus, ratione suscipit harum ut, exercitationem soluta ab laboriosam autem eaque quia quasi nisi ipsum esse architecto.",
-    remera:
-      "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
-  }
+  }, [])
+
   // SE TIENE QUE GUARDAR EL PRECIO Y CANTIDAD DE ITEM EN UN CONTEXTO
 
-  const getQuantity = (quan: number) => {
+  const getQuantity = (quan: number = 1) => {
     setQuantity(quan)
   }
-  const getSize = (tamano: string) =>{
+  const getSize = (tamano: string = 'small') =>{
     setSize(tamano)
-    console.log(size);
     
   }
   const enviarAlCarrito = (producto: Producto) =>{
@@ -80,12 +69,8 @@ export function Item() {
     addProducto(objetoConDetalles)
   }
 
-  console.log("CANTIDAD EN ITEM, CONTEXT" + quantity);
-  console.log(carrito);
-  console.log(item.image);
   const showSelectedImage = (image: string) => {
     setCurrentItemImage(image)
-    console.log(image);
   }
 
   return(
@@ -93,7 +78,7 @@ export function Item() {
       
     {loading 
       ? <Loader/>
-      : <div className="lg:container w-full md:h-180 lg:h-fit md:container p-1 md:p-0 mx-auto my-5">
+      : <div className="lg:container w-full md:h-180 lg:h-fit md:container p-1 md:p-0 mx-auto basis-8/12">
           <h2 className="text-sm uppercase font-extralight font">{category} {'>'} {category} {'>'} # {id} </h2>
           <div className="flex flex-wrap flex-col sm:flex-row sm:gap-2  md:max-h-120 my-2">
               <PhotoDisplay photo={currentItemImage} />
@@ -108,7 +93,7 @@ export function Item() {
                     Agregar al carrito
                   </button>
                 </div>
-                <p>{fotos.description}</p>
+                <p>{item.description.toLowerCase()}</p>
             </div>
           </div>
         </div>

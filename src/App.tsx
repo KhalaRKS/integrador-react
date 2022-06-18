@@ -7,21 +7,30 @@ import Home from './views/Home';
 import { Item } from './views/Item';
 import { ProductsContext } from './context/ProductsContext';
 import { CarritoContext } from './context/CarritoContext';
+import { Carrito } from './views/Carrito';
+import { Toaster } from 'react-hot-toast';
 function App() {
   return (
     <BrowserRouter>
+    <div className='flex flex-col justify-between h-screen'>
       <CarritoContext>
         <ProductsContext>
           <Navbar/>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+          />
           <Routes>
               <Route index element={<Home />} />
               <Route path="/" element={<Home />}/>
               <Route path="/about" element={<About />}/>
+              <Route path="/carrito" element={<Carrito />}/>
               <Route path='/item/:category/:id' element={<Item />}/>
           </Routes>
         </ProductsContext>
       </CarritoContext>
       <Footer/>
+    </div>
     </BrowserRouter>
 
   );

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
- interface NavbarProps {
+
+ interface ButtonProps {
    text: string,
+   Click?: () => void,
  }
-function Button({text}: NavbarProps) {
+function Button({text, Click}: ButtonProps) {
   return (
-    <button className="w-fit mx-auto bg-sky-600 hover:bg-sky-700 border-2 border-sky-600 focus:border-2 focus:border-sky-800 rounded-full font-sans font-medium text-md text-white py-1 px-2">
+    <button onClick={() => Click} className="w-fit mx-auto font-bold text-lg select-none hover:bg-green-500 text-green-500  border-2 border-green-500 focus:bg-green-600 focus:text-white font-sans hover:text-white py-1 px-2">
         {text}
     </button>
   )

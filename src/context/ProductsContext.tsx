@@ -1,11 +1,10 @@
 
 import {createContext, useState} from 'react'
-import { remerasMenPath, remerasWomenPath } from '../constants/Constantes';
 
 interface AppContextInterface {
   productos: any[] | null,
 }
-export const productsContext = createContext(null as any)
+export const productsContext = createContext<AppContextInterface>({} as AppContextInterface)
 
 const { Provider } = productsContext
 console.log(productsContext);
@@ -36,7 +35,7 @@ export function ProductsContext({children}: any | undefined) {
         HECHO DE UN JERSEY DE ALGODÓN 100% TRATADO CON 
         UN LAVADO DE PRENDAS PARA SUAVIDAD Y PREENCOGIDO 
         PARA UN GRAN AJUSTE.`,
-        image:['https://i.ibb.co/ZRjDgjf/musculosa-negra-01.webp', 'https://i.ibb.co/7WZC6Lz/musculosa-negra-02.webp'],
+        image:['https://i.ibb.co/dbwfcCY/musculosa-verde-01.webp', 'https://i.ibb.co/H7xC1cD/musculosa-verde-02.webp'],
         category: 'remeras',
         colores: ['negra', 'verde'],
         quantity: 1,
@@ -50,7 +49,7 @@ export function ProductsContext({children}: any | undefined) {
         HECHO DE UN JERSEY DE ALGODÓN 100% TRATADO CON 
         UN LAVADO DE PRENDAS PARA SUAVIDAD Y PREENCOGIDO 
         PARA UN GRAN AJUSTE.`,
-        image:['https://i.ibb.co/ZRjDgjf/musculosa-negra-01.webp', 'https://i.ibb.co/7WZC6Lz/musculosa-negra-02.webp'],
+        image:['https://i.ibb.co/4NKNdn9/remera-beige-01.webp', 'https://i.ibb.co/xHgCVY7/remera-beige-02.webp'],
         category: 'remeras',
         colores: ['negra', 'verde'],
         quantity: 1,
@@ -89,6 +88,8 @@ export function ProductsContext({children}: any | undefined) {
     const contextValue = {
       productos: products,
     }
+    console.log(productsContext);
+    
     return (
       <Provider value={contextValue}>
         {children}

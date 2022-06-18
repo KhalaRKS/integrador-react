@@ -7,7 +7,7 @@ import { Loader } from '../components/Loader';
 import { useContext } from 'react';
 import { productsContext } from '../context/ProductsContext';
 
-interface Productos {
+export interface Productos {
   id: number,
   name: string,
   image: Array<string>,
@@ -35,8 +35,7 @@ function Home() {
     navigate(`/item/${category}/${id}`);
   }
   return (
-      <div className='container mx-auto flex flex-col gap-2'>
-        <Button text='Save changes'/>
+      <div className='container mx-auto flex flex-col gap-2 py-5'>
         <Carrousel/>
         <h2 className='font- text-2xl text-center p-5'>Productos destacados</h2>
         <div className='flex gap-5 my-5 flex-wrap self-center justify-center'>
