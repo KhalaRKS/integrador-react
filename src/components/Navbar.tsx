@@ -15,7 +15,7 @@ function Navbar() {
   
   return (  
     <>
-    <div className='shadow-lg fixed z-10 w-full bg-white'>
+    <div className='shadow-lg fixed z-10 w-full bg-white px-2'>
     <nav className='container bg-white flex flex-row items-center mx-auto justify-between py-2'>
       <div className='flex justify-between basis-full  md:basis-2/5 gap-1 items-center'>
         <h2 className='text-xl font-medium'>Fashion</h2>
@@ -50,7 +50,7 @@ function Navbar() {
 
     
     </div>
-     <MenuVertical className={desplegarMenu ? 'transition-all duration-500 h-64 w-full pt-24 opacity-100' : 'transition-all translate-x-180 duration-500 h-0 w-0'}/>
+     <MenuVertical showMenuOptions={desplegarMenu} className={desplegarMenu ? 'transition-all items-center justify-center flex w-full h-64 pt-24 opacity-100 translate-y-0 md:hidden basis-1/4 duration-1000' : 'transition-all  -translate-y-full h-0 w-full md:hidden opacity-0 duration-1000'}/>
      </>
   )
 }

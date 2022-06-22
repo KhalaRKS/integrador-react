@@ -5,19 +5,27 @@ import { carritoContext } from '../../context/CarritoContext';
 
 interface MenuVerticalProps {
     className: string,
+    showMenuOptions: boolean,
 }
 
 
-export function MenuVertical({className}: MenuVerticalProps) {
+export function MenuVertical({className, showMenuOptions}: MenuVerticalProps) {
     const {cantidad} = useContext(carritoContext)
   return (
     <div className={className}>
         <div className='justify-around flex flex-col items-center gap-5 md:hidden'>
-            <Link to="/" className='flex-1'>Home</Link>
-            <Link to="about" className='flex-1'>About</Link>
-            <Link to="item" className='flex-1'>Item</Link>
-            <Link to="carrito" className='flex-1'>carrito {cantidad}</Link>
+            <Link to="/" className={showMenuOptions ? 'flex-1 transition-all duration-500 opacity-1' : 'flex-1 transition-all duration-500 opacity-0'}>Home</Link>
+            <Link to="about" className={showMenuOptions ? 'flex-1 transition-all duration-300 opacity-1' : 'flex-1 transition-all duration-500 opacity-0'}>About</Link>
+            <Link to="item" className={showMenuOptions ? 'flex-1 transition-all duration-200 opacity-1' : 'flex-1 transition-all duration-500 opacity-0'}>Item</Link>
+            <Link to="carrito" className={showMenuOptions ? 'flex-1 transition-all duration-100 opacity-1' : 'flex-1 transition-all duration-500 opacity-0'}>carrito {cantidad}</Link>
         </div>
     </div>
   )
 }
+// keyframes: {
+//     hidden: {
+//       '0%, 99%': { opacity: '0.9' },
+//       '100%': { display: 'hidden', opacity: '0' },
+//     },
+//     animation: 'hidden 0.3s ease-in'
+//   }
