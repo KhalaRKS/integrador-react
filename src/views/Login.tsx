@@ -1,7 +1,17 @@
 import { InputFormLogin } from "../components/InputFormLogin";
+import {useEffect, useState} from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 export function Login() {
+  const [loginView, setLoginView] = useState(true)
+  const [path, setPath] = useState('Login')
+  const location = useLocation()
+  useEffect(() => {
+    if(location.pathname === 'register')
+    setLoginView(!loginView)
 
+  }, [location])
+  
   return (
 
   <section>
@@ -75,6 +85,12 @@ export function Login() {
           >
             <p className="text-center font-semibold mx-4 mb-0">Or</p>
           </div>
+          
+            {loginView && <InputFormLogin text="Name" type="text"/>}
+            {loginView && <InputFormLogin text="Surname" type="text"/>}
+          
+            
+          
           <InputFormLogin text="Email Adress" type="email"/>
           <InputFormLogin text="Password" type="password"/>
           <div className="flex justify-between items-center mb-6">
@@ -93,14 +109,15 @@ export function Login() {
               type="button"
               className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
             >
-              Login
+              {loginView ? 'Login' : 'Sign Up'}
             </button>
             <p className="text-sm font-semibold mt-2 pt-1 mb-0">
               Don't have an account?
-              <a
-                href="#!"
+              <Link
+                to={location.pathname === 'register' ? '/login' : '/register'}
                 className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-                >Register</a>
+                >{loginView ? 'Login' : 'Sign Up'}
+              </Link>
             </p>
           </div>
         </form>

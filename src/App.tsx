@@ -11,6 +11,7 @@ import { Carrito } from './views/Carrito';
 import { Toaster } from 'react-hot-toast';
 import { Login } from './views/Login';
 function App() {
+  
   return (
     <BrowserRouter>
     <div className='flex flex-col justify-between h-screen'>
@@ -28,6 +29,7 @@ function App() {
               <Route path="/" element={<Home />}/>
               <Route path="/about" element={<About />}/>
               <Route path="/carrito" element={<Carrito />}/>
+              <Route path={'/register'} element={<Login />}/>
               <Route path="/login" element={<Login />}/>
               <Route path='/item/:category/:id' element={<Item />}/>
           </Routes>

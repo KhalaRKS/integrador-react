@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useState} from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState} from 'react'
+import { Link, useLocation} from 'react-router-dom';
 import { carritoContext } from '../context/CarritoContext'
 import LogInButtons from './LogInButtons'
 import { MenuVertical } from './MenuVertical/MenuVertical';
+import {CartIcon} from '../assets/images/vectores/CartIcon';
 
 function Navbar() {
-  const {cantidad} = useContext(carritoContext)
-  const location = useLocation()
   const [desplegarMenu, setDesplegarMenu] = useState(false)
-
+  const location = useLocation()
   useEffect(() => {
-    console.log(location);
+    if(desplegarMenu)
+    setDesplegarMenu(!desplegarMenu)
   }, [location])
+  
   
   return (  
     <>
-    <div className='shadow-lg fixed z-10 w-full bg-white px-2'>
+    <div className='shadow-lg fixed w-full bg-white px-2 z-20 py-0.5'>
     <nav className='container bg-white flex flex-row items-center mx-auto justify-between py-2'>
       <div className='flex justify-between basis-full  md:basis-2/5 gap-1 items-center'>
-        <h2 className='text-xl font-medium'>Fashion</h2>
+        <Link to='/' className='text-xl font-medium'>Fashion</Link>
         <div className="flex justify-center">
         <div className="xl:w-96">
           <div className="input-group relative flex flex-wrap items-stretch w-full rounded">
@@ -32,11 +33,11 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className=' justify-around basis-1/3 hidden md:flex'>
-        <Link to="/" className='flex-1'>Home</Link>
-        <Link to="about" className='flex-1'>About</Link>
-        <Link to="item" className='flex-1'>Item</Link>
-        <Link to="carrito" className='flex-1'>carrito {cantidad}</Link>
+      <div className=' justify-around basis-1/3 hidden md:flex items-center'>
+        <Link to="/" className='flex-1 text-center'>Home</Link>
+        <Link to="about" className='flex-1 text-center'>About</Link>
+        <Link to="item" className='flex-1 text-center'>Item</Link>
+        <Link to="carrito" className='flex-1 text-center'><CartIcon/></Link>
       </div>
       <div className='hidden md:flex'>
       <LogInButtons/>
@@ -50,7 +51,7 @@ function Navbar() {
 
     
     </div>
-     <MenuVertical showMenuOptions={desplegarMenu} className={desplegarMenu ? 'transition-all items-center justify-center flex w-full h-64 pt-24 opacity-100 translate-y-0 md:hidden basis-1/4 duration-1000' : 'transition-all  -translate-y-full h-0 w-full md:hidden opacity-0 duration-1000'}/>
+     <MenuVertical showMenuOptions={desplegarMenu} className={desplegarMenu ? 'fixed transition-all items-center justify-center flex w-full h-64 opacity-100 translate-y-14 md:hidden basis-1/4 duration-1000 z-10 bg-white' : 'bg-white z-10 fixed transition-all -translate-y-full h-64 w-full md:hidden opacity-0 duration-1000'}/>
      </>
   )
 }
