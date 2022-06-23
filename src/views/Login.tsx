@@ -17,14 +17,14 @@ export function Login() {
   <section>
   <div className="flex px-6 h-screen text-gray-800 mx-auto">
     <div
-      className="flex flex-col-reverse mx-auto sm:flex-col xl:justify-center justify-center items-center flex-wrap h-full g-6"
+      className="flex flex-col mx-auto l xl:justify-center justify-center items-center lg:flex-row h-full g-6"
     >
       <div
         className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
       >
             <img
           src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-          className="w-full mx-auto max-h-72 md:max-h-fit sm:my-5"
+          className="w-full  mx-auto max-h-72 md:max-h-fit md:max-w-lg lg:max-w-full sm:my-5"
           alt=""
         />
       </div>
@@ -85,14 +85,12 @@ export function Login() {
           >
             <p className="text-center font-semibold mx-4 mb-0">Or</p>
           </div>
-          
+          <div>
             {loginView && <InputFormLogin text="Name" type="text"/>}
             {loginView && <InputFormLogin text="Surname" type="text"/>}
-          
-            
-          
-          <InputFormLogin text="Email Adress" type="email"/>
-          <InputFormLogin text="Password" type="password"/>
+            <InputFormLogin text="Email Adress" type="email"/>
+            <InputFormLogin text="Password" type="password"/>
+          </div>
           <div className="flex justify-between items-center mb-6">
             <div className="form-group form-check">
               <input
